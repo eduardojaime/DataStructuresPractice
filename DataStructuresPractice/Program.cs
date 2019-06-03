@@ -14,10 +14,6 @@ namespace DataStructuresPractice
         static void Main(string[] args)
         {
             Random numberGenerator = new Random();
-            // Array
-            // Operations sort - quicksort and sort - heapsort
-            // Average and worst case time complexity O(n) or O(n logn)
-            // Difficulty: Medium
             int[] arRandomNumbers = new int[10];
             // Fill my array with random numbers
 
@@ -34,7 +30,9 @@ namespace DataStructuresPractice
             // If the number of partitions exceeds 2 * Log ^ N, it uses Heapsort
             // Otherwise it uses a Quicksort (more than 16 elements)
             // Worst case for this method is an O(n log n) where n is the length of the array
-            // Array.Sort(arRandomNumbers);
+            Array.Sort(arRandomNumbers);
+
+            BinarySearch(6, arRandomNumbers).ToString();
 
             // Implementing Quick Sort
             SortArray(arRandomNumbers, 0, arRandomNumbers.Length - 1);
@@ -107,8 +105,6 @@ namespace DataStructuresPractice
             // Initial right index greater than new left index > Go to the right side of the array
             if (i < right)
                 QuickSort(arRandomNumbers, i, right);
-
-
         }
 
         private static void HeapSort(int[] arRandomNumbers)
@@ -213,6 +209,52 @@ namespace DataStructuresPractice
             myNameLinkedList.Clear();
         }
 
+
+        // Search algorithms
+        // More info https://cooervo.github.io/Algorithms-DataStructures-BigONotation/algorithms.html
+        // Performs a binary search in a given sorted array and returns the index value of the first element that matches
+        private static int BinarySearch(int searchVal, int[] sortedArray)
+        {
+            int lowestIndex = 0;
+            int highestIndex = sortedArray.Length - 1;
+
+            while (lowestIndex <= highestIndex)
+            {
+                int midIndex = lowestIndex + (highestIndex - lowestIndex) / 2;
+
+                // search value is in the left side of the array
+                // modify index values for next iteration
+                if (searchVal < sortedArray[midIndex])
+                    highestIndex = midIndex - 1;
+                // search value is in the right side of the array
+                else if (sortedArray[midIndex] < searchVal)
+                    lowestIndex = midIndex + 1;
+                // value has been found!
+                else if (searchVal == sortedArray[midIndex])
+                {
+                    Console.WriteLine("Value : " + searchVal.ToString() + " found at position " + midIndex.ToString());
+                    return midIndex;
+                }
+            }
+
+            // Nothing found
+            Console.WriteLine("Value : " + searchVal.ToString() + " not found in the given array");
+            return -1;
+        }
+
+        // Performs a linear search in a given sorted array and returns the index value of the first element that matches
+
+        private static int LinearSearch(int searchVal, int[] sortedArray)
+        {
+
+            for (int i = 0; i < sortedArray.Length; i++)
+            {
+                if (searchVal == sortedArray[i])
+                    return i;
+            }
+
+            return -1;
+        }
 
 
     }
